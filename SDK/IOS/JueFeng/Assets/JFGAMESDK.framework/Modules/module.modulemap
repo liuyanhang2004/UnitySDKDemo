@@ -1,0 +1,6 @@
+framework module JFGAMESDK {
+  umbrella header "JFGameSDK.h"
+
+  export *
+  module * { export * }
+}

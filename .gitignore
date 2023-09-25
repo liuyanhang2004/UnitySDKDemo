@@ -1,0 +1,17 @@
+# 忽略Unity项目文件
+Unity/*.sln
+Unity/*.suo
+Unity/*.csproj
+Unity/.vsconfig
+Unity/.vs/
+Unity/Library/
+Unity/Temp/
+Unity/bin/
+Unity/obj/
+# 忽略构建输出目录
+Build/
+# SDK
+SDK/Android/QQ/QQ_Android_SDK
+SDK/IOS/QQ/QQ_Android_SDK
+SDK/Android/JueFeng/JFGameSDK_Android_V5.2.2
+SDK/IOS/JueFeng/JFGameSDK_iOS_V3.2.3
