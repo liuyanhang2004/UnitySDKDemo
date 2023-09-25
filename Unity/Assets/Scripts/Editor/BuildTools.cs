@@ -35,13 +35,16 @@ class BuildTools
 
     static Channel getChannel()
     {
-#if SDK && QQSDK && UNITY_ANDROID
-        return Channel.QQ;
-#elif SDK && JFSDK
-        return Channel.JueFeng;
-#else
-        return Channel.NULL;
-#endif
+        var target = EditorUserBuildSettings.activeBuildTarget;
+        Debug.Log(target);
+        var platformMacro = PlayerSettings.GetScriptingDefineSymbolsForGroup(
+            BuildPipeline.GetBuildTargetGroup(target)).Split(';').ToList();
+        if (platformMacro.Contains("SDK") && platformMacro.Contains("QQSDK") && target == BuildTarget.Android)
+            return Channel.QQ;
+        else if (platformMacro.Contains("SDK") && platformMacro.Contains("JFSDK"))
+            return Channel.JueFeng;
+        else
+            return Channel.NULL;
     }
 
     /// <summary>
@@ -223,10 +226,7 @@ class BuildTools
         // 将新增的sdk code放到ios目录下导出ios项目可以减少xcode配置
         var pluginsInfo = FDTools.copyDirectory(sdkPlugins, outPlugins);
         AssetDatabase.Refresh();
-        if (!build(BuildTarget.iOS, outPath))
-            return false;
-        FDTools.copyDirectory(sdkAssets, outAssets);
-        FDTools.copyDirectory(sdkReplaceFiles, outReplaceFiles);
+        var r = build(BuildTarget.iOS, outPath);
         foreach (var path in pluginsInfo)
         {
             if (Directory.Exists(path))
@@ -235,6 +235,11 @@ class BuildTools
             File.Delete($"{ path}.meta");
         };
         AssetDatabase.Refresh();
+        if (!r)
+            return false;
+        // 拷贝sdk相关的资源到导出的项目
+        FDTools.copyDirectory(sdkAssets, outAssets);
+        FDTools.copyDirectory(sdkReplaceFiles, outReplaceFiles);
     XCodeConfig:
         setXCodeConfig(outPath);
         return true;

@@ -27,8 +27,6 @@ public class Splash : MonoBehaviour
         target.color = Color.white;
         video.loopPointReached += (_) => SceneManager.LoadScene(2);
         video.playbackSpeed = speed;
-        Debug.Log(video.canSetPlaybackSpeed);
-        Debug.Log(video.playbackSpeed);
         video.Play();
     }
 
