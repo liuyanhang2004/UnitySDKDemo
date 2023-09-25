@@ -8,8 +8,8 @@ Unity/Library/
 Unity/Temp/
 Unity/bin/
 Unity/obj/
-UnitySDKDemo/Unity/Assets/StreamingAssets/build_info
-UnitySDKDemo/Unity/Assets/StreamingAssets/build_info.meta
+Unity/Assets/StreamingAssets/build_info
+Unity/Assets/StreamingAssets/build_info.meta
 # 忽略构建输出目录
 Build/
 # SDK
