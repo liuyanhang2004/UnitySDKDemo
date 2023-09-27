@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -53,19 +55,18 @@ public class MainPanel : MonoBehaviour
             var downloadInfo = testUpdatePanel.GetComponentInChildren<Text>();
             downloadInfo.text = null;
             slider.value = 0;
-            StartCoroutine(DownloadWrap.downloadFromBreakPoint(null, null,
-                      (progress, totalSize) =>
-                      {
-                          downloadInfo.text = $"TestDownload.zip {Mathf.Floor(totalSize * progress)}M / {totalSize}M";
-                          slider.value = progress;
-                      },
-                      () =>
-                      {
-                          UILog.i("update completed");
-                          testUpdatePanel.SetActive(false);
-                      }));
+            DownloadWrap.downloadFile(null, null, false, this.GetCancellationTokenOnDestroy(),
+                (progress, totalSize) =>
+                {
+                    downloadInfo.text = $"TestDownload.zip {Mathf.Floor(progress * totalSize)}M / {totalSize}M";
+                    slider.value = progress;
+                },
+                () =>
+                {
+                    UILog.i("update completed");
+                    testUpdatePanel.SetActive(false);
+                }).Forget();
         });
-
 #if !UNITY_EDITOR && SDK && QQSDK && UNITY_ANDROID
         qqSDKUI();
 #elif !UNITY_EDITOR && SDK && JFSDK
@@ -91,7 +92,7 @@ public class MainPanel : MonoBehaviour
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-#else       
+#else
             Application.Quit();
 #endif
         }
