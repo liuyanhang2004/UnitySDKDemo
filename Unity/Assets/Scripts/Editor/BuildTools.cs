@@ -143,13 +143,6 @@ class BuildTools
                 FDTools.addLineAfterInFile($"{outPath}/unityLibrary/build.gradle", 7, $"    implementation(name: '{name}', ext:'{ext}')");
             }
         }
-        // NOTE: Android Gradle Plugin Version要与Gradle Version匹配
-        // UNITY_2019_4 Android Gradle Plugin为3.40 Gradle Version为5.1.1不同Unity版本导出Android项目使用的Gradle Plugin Version会有差别
-        // 如果使用gradle命令行打包可以忽略这一步用不到gradlew
-        // 使用AS来打包APK则需要保留因为AS默认会使用最新的gradle
-#if UNITY_2019_4
-        FDTools.copyDirectory($"{sdkRootDir}/Android/gradlew5.1.1/", $"{outPath}/gradle");
-#endif
         return true;
     }
 

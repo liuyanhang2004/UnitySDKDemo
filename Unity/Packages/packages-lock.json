@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.gilzoide.gradle-wrapper": {
+      "version": "https://github.com/gilzoide/unity-gradle-wrapper.git#1.0.5",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "7c1a265e94ac58f7f734f9affb7b73fb353be1e8"
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
       "depth": 1,
