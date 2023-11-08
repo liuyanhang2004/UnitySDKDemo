@@ -4,7 +4,7 @@
         "m_EditorHideFlags": 0,
         "m_Name": "",
         "m_EditorClassIdentifier": "",
-        "ToolbarIndex": 1,
+        "ToolbarIndex": 0,
         "m_iOSNotificationSettingsValues": {
             "m_Keys": [
                 "UnityNotificationRequestAuthorizationOnAppLaunch",
@@ -33,8 +33,8 @@
             ],
             "m_Values": [
                 "True",
-                "False",
-                "com.unity3d.player.UnityPlayerActivity"
+                "True",
+                "com.lyh.t1.game.UnityPlayerActivity"
             ]
         },
         "DrawableResources": [

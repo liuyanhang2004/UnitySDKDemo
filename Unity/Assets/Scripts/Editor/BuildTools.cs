@@ -23,7 +23,6 @@ class BuildTools
         Debug.Log(sdkRootDir);
         Debug.Log(buildOutRootDir);
         Debug.Log(getChannel());
-        buildApp();
     }
 
     enum Channel
@@ -108,21 +107,16 @@ class BuildTools
         string myPackgeName = PlayerSettings.applicationIdentifier.Replace(".", "/");
         // 设为导出
         EditorUserBuildSettings.exportAsGoogleAndroidProject = true;
-        // <消息推送指定UnityPlayerActivity位置>
-        if (channel == Channel.NULL)
-        {
-            NotificationSettings.AndroidSettings.UseCustomActivity = false;
-            NotificationSettings.AndroidSettings.CustomActivityString = "com.unity3d.player.UnityPlayerActivity";
-        }
-        else
-        {
-            NotificationSettings.AndroidSettings.UseCustomActivity = true;
-            NotificationSettings.AndroidSettings.CustomActivityString = "com.lyh.t1.game.UnityPlayerActivity";
-        }
+        NotificationSettings.AndroidSettings.UseCustomActivity = true;
+        NotificationSettings.AndroidSettings.CustomActivityString = "com.lyh.t1.game.UnityPlayerActivity";
         // 签名
         setAndroidKeystore();
         if (!build(BuildTarget.Android, outPath))
             return false;
+        // 更改包名
+        // $"{outSrcDir}/main/java/{myPackgeName}/game" 自定义文件夹替换unity默认文件夹
+        FDTools.copyFile(Directory.GetFiles($"{outSrcDir}/main/java/com/unity3d/player"), $"{outSrcDir}/main/java/{myPackgeName}/game");
+        FDTools.delDir($"{outSrcDir}/main/java/com/unity3d");
         if (channel == Channel.NULL)
             goto AndroidProjectConfig;
         // sdk配置
@@ -131,7 +125,7 @@ class BuildTools
         // AndroidManifest.xml
         FDTools.copyFile($"{sdkSrcDir}/AndroidManifest.xml", $"{outSrcDir}/main");
         // codes
-        FDTools.delDir($"{outSrcDir}/main/java/");
+        // 将sdk重写后的UnityPlayerActivity复制过去
         FDTools.copyFile(Directory.GetFiles(sdkSrcDir, "*.java"), $"{outSrcDir}/main/java/{myPackgeName}/game");
     AndroidProjectConfig:
         if (channel != Channel.NULL)
@@ -225,7 +219,7 @@ class BuildTools
             if (Directory.Exists(path))
                 continue;
             File.Delete(path);
-            File.Delete($"{ path}.meta");
+            File.Delete($"{path}.meta");
         };
         AssetDatabase.Refresh();
         if (!r)

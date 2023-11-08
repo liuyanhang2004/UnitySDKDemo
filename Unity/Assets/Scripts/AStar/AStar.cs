@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -239,7 +238,7 @@ public class AStar : MonoBehaviour
                     if (i == 0 && j == 0)
                         continue;
                     // 支持斜方向
-                    if (!oblique && MathF.Abs(i) == MathF.Abs(j))
+                    if (!oblique && Mathf.Abs(i) == Mathf.Abs(j))
                         continue;
                     // print($"{i}, {j}");
                     // 邻居获取顺序  → ↑ ↓ ← 
@@ -288,7 +287,7 @@ public class AStar : MonoBehaviour
 
     private float getToEndDist(Grid start)
     {
-        return MathF.Abs(end.x - start.x) + MathF.Abs(end.z - start.z);
+        return Mathf.Abs(end.x - start.x) + Mathf.Abs(end.z - start.z);
     }
 
     private Grid getMinFGrid()

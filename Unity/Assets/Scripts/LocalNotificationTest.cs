@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEditor;
 #if UNITY_IPHONE
 using Unity.Notifications.iOS;
 #elif UNITY_ANDROID
@@ -12,7 +13,7 @@ public class LocalNotificationTest : MonoBehaviour
 {
     public static LocalNotificationTest inst;
 #if UNITY_ANDROID
-    AndroidJavaClass A_NotificationUtils = new AndroidJavaClass("com.unity3d.player.NotificationRequestUtils");
+    AndroidJavaClass A_NotificationUtils = new AndroidJavaClass($"{PlayerSettings.applicationIdentifier}.game.NotificationRequestUtils");
 #endif
     void Awake()
     {

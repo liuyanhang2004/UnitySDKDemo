@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using System.Diagnostics;
 
 /// <summary>
 /// File Dir Tool
@@ -158,7 +159,9 @@ public class FDTools
     public static void showInExplorer(string path)
     {
 #if UNITY_EDITOR_WIN
-        System.Diagnostics.Process.Start("explorer.exe", Path.GetFullPath(path));
+        Process.Start("explorer.exe", Path.GetFullPath(path));
+#elif UNITY_EDITOR_OSX
+        Process.Start("open", "-R " + Path.GetFullPath(path));
 #else
         EditorUtility.RevealInFinder(path);
 #endif
