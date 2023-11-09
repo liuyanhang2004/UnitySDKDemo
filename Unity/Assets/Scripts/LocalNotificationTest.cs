@@ -12,13 +12,15 @@ using Unity.Notifications.Android;
 public class LocalNotificationTest : MonoBehaviour
 {
     public static LocalNotificationTest inst;
-#if UNITY_ANDROID
+#if UNITY_EDITOR
+#elif UNITY_ANDROID
     AndroidJavaClass A_NotificationUtils = new AndroidJavaClass($"{PlayerSettings.applicationIdentifier}.game.NotificationRequestUtils");
 #endif
     void Awake()
     {
         inst = this;
-#if UNITY_ANDROID
+#if UNITY_EDITOR
+#elif UNITY_ANDROID
         registerNotificationChannel();
         // 低版本Android需引导打开通知设置
         if (PlayerPrefs.GetString("NotificationsState") == string.Empty)
