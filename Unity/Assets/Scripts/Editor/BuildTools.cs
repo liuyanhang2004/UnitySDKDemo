@@ -294,11 +294,13 @@ class BuildTools
                 // 添加本地Framework
                 filePath = "JFGAMESDK.framework";
                 fileGuid = project.AddFile(filePath, "Frameworks/" + filePath, PBXSourceTree.Source);
-                project.AddFileToBuild(mainTarget, fileGuid);
-                project.AddFileToBuild(unityFrameworkTarget, fileGuid);
+                // project.AddFileToBuild(mainTarget, fileGuid);
+                // project.AddFileToBuild(unityFrameworkTarget, fileGuid);
                 // mbed&Sign
-                PBXProjectExtensions.AddFileToEmbedFrameworks(project, mainTarget, fileGuid);
-                PBXProjectExtensions.AddFileToEmbedFrameworks(project, unityFrameworkTarget, fileGuid);
+                // PBXProjectExtensions.AddFileToEmbedFrameworks(project, mainTarget, fileGuid);
+                // PBXProjectExtensions.AddFileToEmbedFrameworks(project, unityFrameworkTarget, fileGuid);
+                project.AddFileToEmbedFrameworks(mainTarget, fileGuid);
+                project.AddFileToEmbedFrameworks(unityFrameworkTarget, fileGuid);
                 // 添加本地Framework时需要手动设置SEARCH_PATHS不然会找不到库
                 // 在xcode中添加本地库时会自动设置这些(unity2019.4添加库时不会自动设置)
                 project.SetBuildProperty(mainTarget, "LD_RUNPATH_SEARCH_PATHS", "$(inherited)");
