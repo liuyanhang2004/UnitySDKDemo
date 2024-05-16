@@ -1,0 +1,15 @@
+AlipaySDK.framework  =  DoNotEmbed
+AdSupport.framework   添加
+Photos.framework	添加
+Architectures = Standard Architectures  
+Enable Bitcode  = No
+Build Active Architecture Only  = No
+
+info 增加 LSApplicationQueriesSchemes  Array
+	item0 =  alipay
+	item1 = alipayshare
+	item2 = weixin
+	item3 = wechat
+info URL Types  URL Schemes = JFGAME81308
+info https App Transport Security Setting 
+	Allow Arbitrary Loads = YES
